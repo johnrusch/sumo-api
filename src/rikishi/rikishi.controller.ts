@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { RikishiService } from './rikishi.service';
 import { CreateRikishiDto } from './dto/create-rikishi.dto';
 import { UpdateRikishiDto } from './dto/update-rikishi.dto';
+import { Rikishi } from './entities/rikishi.entity';
 
 @Controller('rikishi')
 export class RikishiController {
@@ -10,6 +11,11 @@ export class RikishiController {
   @Post()
   create(@Body() createRikishiDto: CreateRikishiDto) {
     return this.rikishiService.create(createRikishiDto);
+  }
+  
+  @Post('many')
+  createMany(@Body() createRikishiDto: CreateRikishiDto[]) {
+    return this.rikishiService.createMany(createRikishiDto);
   }
 
   @Get()

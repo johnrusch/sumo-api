@@ -10,8 +10,22 @@ export class RikishiService {
 
   constructor(@InjectModel(Rikishi.name) private rikishiModel: Model<Rikishi>) {}
 
-  create(createRikishiDto: CreateRikishiDto) {
-    return 'This action adds a new rikishi';
+  create(createRikishiDto: CreateRikishiDto): Promise<Rikishi> {
+    if (typeof createRikishiDto.birthdate === 'string') {
+      createRikishiDto.birthdate = new Date(createRikishiDto.birthdate);
+    };
+    const createdRikishi = this.rikishiModel.create(createRikishiDto);
+    return createdRikishi;
+  }
+
+  createMany(createRikishiDto: CreateRikishiDto[]): Promise<Rikishi[]> {
+    for (const rikishi of createRikishiDto) {
+      if (typeof rikishi.birthdate === 'string') {
+        rikishi.birthdate = new Date(rikishi.birthdate);
+      };
+    };
+    const createdRikishi = this.rikishiModel.insertMany(createRikishiDto);
+    return createdRikishi;
   }
 
   findAll() {
