@@ -1,0 +1,32 @@
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreateRikishiDto } from './dto/create-rikishi.dto';
+import { UpdateRikishiDto } from './dto/update-rikishi.dto';
+import { Rikishi } from './schemas/rikishi.schema';
+
+@Injectable()
+export class RikishiService {
+
+  constructor(@InjectModel(Rikishi.name) private rikishiModel: Model<Rikishi>) {}
+
+  create(createRikishiDto: CreateRikishiDto) {
+    return 'This action adds a new rikishi';
+  }
+
+  findAll() {
+    return `This action returns all rikishi`;
+  }
+
+  findOne(id: number) {
+    return `This action returns a #${id} rikishi`;
+  }
+
+  update(id: number, updateRikishiDto: UpdateRikishiDto) {
+    return `This action updates a #${id} rikishi`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} rikishi`;
+  }
+}
