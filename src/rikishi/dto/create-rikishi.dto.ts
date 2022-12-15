@@ -1,6 +1,6 @@
 export class CreateRikishiDto {
     shikona: string;
-    highestRank: number;
+    highestRank: string;
     currentRank: string;
     heya: string;
     height: number;
@@ -11,5 +11,6 @@ export class CreateRikishiDto {
     kinboshi: number;
     kantoSho: number;
     ginoSho: number;
+    imageUrl: string;
 }
   

@@ -4,7 +4,7 @@ import { CreateRikishiDto } from './create-rikishi.dto';
 export class UpdateRikishiDto extends PartialType(CreateRikishiDto) {
     id: number;
     shikona: string;
-    highestRank: number;
+    highestRank: string;
     currentRank: string;
     heya: string;
     height: number;
@@ -15,4 +15,5 @@ export class UpdateRikishiDto extends PartialType(CreateRikishiDto) {
     kinboshi: number;
     kantoSho: number;
     ginoSho: number;
+    imageUrl: string;
 }

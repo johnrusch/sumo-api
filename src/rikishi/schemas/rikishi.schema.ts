@@ -9,7 +9,7 @@ export class Rikishi {
   shikona: string;
 
   @Prop()
-  highestRank: number;
+  highestRank: string;
 
   @Prop()
   currentRank: string;
@@ -40,6 +40,9 @@ export class Rikishi {
 
   @Prop()
   ginoSho: number;
+
+  @Prop()
+  imageUrl: string;
 }
 
 export const RikishiSchema = SchemaFactory.createForClass(Rikishi);
