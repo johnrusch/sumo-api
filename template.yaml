@@ -1,0 +1,63 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: AWS-SAM-APIGW-Lambda-DDB
+
+Globals:
+  Function:
+    Runtime: nodejs16.x
+    MemorySize: 128
+    Timeout: 30
+    Layers:
+      - !Ref runtimeDependencies
+
+Resources:
+  #Sumo API Gateway
+  #Stage name: dev
+  sumoAPIGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      Name: sumo-api
+
+  #Rikishi Lambda Function
+  rikishiLambdaPublisher:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: rikishiPublisher
+      Handler: dist/main.handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref rikishiDDBTable
+      Layers:
+        - !Ref runtimeDependencies
+      Events:
+        GetAllRikishi:
+          Type: Api
+          Properties:
+            Path: /rikishi
+            Method: GET
+            RestApiId: !Ref sumoAPIGateway
+
+  runtimeDependencies:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: runtime-dependencies
+      ContentUri: ./
+      CompatibleRuntimes:
+        - nodejs16.x
+      RetentionPolicy: Retain
+
+  #Rikishi DynamoDB table
+  rikishiDDBTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: rikishi
+      PrimaryKey:
+        Name: shikona
+        Type: String
+
+Outputs:
+  RootEndpoint:
+    Description: API Gateway Sumo Endpoint
+    Value:
+      Fn::Sub: https://${sumoAPIGateway}.execute-api.${AWS::Region}.amazonaws.com/dev
