@@ -111,6 +111,28 @@ jobs:
       - uses: actions/setup-python@v2
       - uses: aws-actions/setup-sam@v1
 
+      - name: Temp fix SAM crypto
+        run: |
+         # Find the directory using a wildcard pattern
+         pwd
+         cd /home/runner/work/_temp/
+         ls
+         setup_sam_dir=$(find . -type d -name "setup-sam-*" | head -n 1)
+
+         # Check if the directory was found
+         if [ -z "$setup_sam_dir" ]; then
+           # No directory was found
+           echo "Directory not found"
+         else
+           # Directory was found
+           echo "Found directory: $setup_sam_dir"
+
+           # Activate the virtual environment
+           source "/home/runner/work/_temp/$setup_sam_dir/.venv/bin/activate"
+           echo "Virtual environment activated"
+           pip install cryptography==38.0.4
+         fi
+
       - name: Build resources
         run: sam build --template ${SAM_TEMPLATE} --use-container
 
