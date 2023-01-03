@@ -194,7 +194,7 @@ Resources:
   APIGWHTTPEndpoint:
       Type: 'AWS::ApiGatewayV2::Api'
       Properties:
-          Name: serverlessland-pvt-endpoint
+          Name: sumo-api-endpoint
           ProtocolType: HTTP
   # Create the API Gateway HTTP_PROXY integration between the created API and the private load balancer via the VPC Link.
   # Ensure that the 'DependsOn' attribute has the VPC Link dependency.
@@ -230,7 +230,7 @@ Resources:
     Type: 'AWS::ApiGatewayV2::Stage'
     Properties:
       ApiId: !Ref APIGWHTTPEndpoint
-      StageName: $default
+      StageName: dev
       AutoDeploy: true
     DependsOn:
       - APIGWHTTPEndpoint
