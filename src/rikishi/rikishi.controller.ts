@@ -23,18 +23,18 @@ export class RikishiController {
     return this.rikishiService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.rikishiService.findOne(+id);
+  @Get(':shikona')
+  findOne(@Param('shikona') shikona: string) {
+    return this.rikishiService.findOne(shikona);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateRikishiDto: UpdateRikishiDto) {
-    return this.rikishiService.update(+id, updateRikishiDto);
+    return this.rikishiService.update(id, updateRikishiDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.rikishiService.remove(+id);
+    return this.rikishiService.deleteOne(id);
   }
 }

@@ -7,40 +7,47 @@ import { Rikishi } from './schemas/rikishi.schema';
 
 @Injectable()
 export class RikishiService {
+  constructor(
+    @InjectModel(Rikishi.name) private rikishiModel: Model<Rikishi>,
+  ) {}
 
-  constructor(@InjectModel(Rikishi.name) private rikishiModel: Model<Rikishi>) {}
-
-  create(createRikishiDto: CreateRikishiDto): Promise<Rikishi> {
+  async create(createRikishiDto: CreateRikishiDto): Promise<Rikishi> {
     if (typeof createRikishiDto.birthdate === 'string') {
       createRikishiDto.birthdate = new Date(createRikishiDto.birthdate);
-    };
-    const createdRikishi = this.rikishiModel.create(createRikishiDto);
+    }
+    const createdRikishi = await this.rikishiModel.create(createRikishiDto);
     return createdRikishi;
   }
 
-  createMany(createRikishiDto: CreateRikishiDto[]): Promise<Rikishi[]> {
+  async createMany(createRikishiDto: CreateRikishiDto[]): Promise<Rikishi[]> {
     for (const rikishi of createRikishiDto) {
       if (typeof rikishi.birthdate === 'string') {
         rikishi.birthdate = new Date(rikishi.birthdate);
-      };
-    };
-    const createdRikishi = this.rikishiModel.insertMany(createRikishiDto);
+      }
+    }
+    const createdRikishi = await this.rikishiModel.insertMany(createRikishiDto);
     return createdRikishi;
   }
 
-  findAll() {
-    return `This action returns all rikishi`;
+  async findAll() {
+    return await this.rikishiModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} rikishi`;
+  async findOne(shikona: string) {
+    return await this.rikishiModel.findOne({ shikona }).exec((err, rikishi) => {
+      if (err) {
+        return err;
+      } else {
+        return rikishi;
+      }
+    });
   }
 
-  update(id: number, updateRikishiDto: UpdateRikishiDto) {
-    return `This action updates a #${id} rikishi`;
+  async update(id: string, updateRikishiDto: UpdateRikishiDto) {
+    return await this.rikishiModel.findOneAndUpdate({ id: +id }, updateRikishiDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} rikishi`;
+  async deleteOne(id: string) {
+    return await this.rikishiModel.deleteOne({ id: +id });
   }
 }

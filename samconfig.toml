@@ -2,11 +2,11 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "sumo-test"
+stack_name = "sumo-manual"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-zhyb0ayjfn31"
-s3_prefix = "sumo-test"
+s3_prefix = "sumo-manual"
 region = "us-west-2"
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
-parameter_overrides = "VpcId=\"vpc-0e9dfa6c9665fc9ed\" PrivateSubnetIds=\"subnet-0ad5c5d9278b5a8d0,subnet-03e6f531e3ad5e139\" Image=\"691777775550.dkr.ecr.us-west-2.amazonaws.com/sumo-api:latest\""
+parameter_overrides = "VpcId=\"vpc-06f7d0d404afab12f\" PrivateSubnetIds=\"subnet-04e70601e60ac0e48,subnet-060ed8b9124b72a80\" Image=\"691777775550.dkr.ecr.us-west-2.amazonaws.com/sumo-api:latest\""
 image_repositories = []
