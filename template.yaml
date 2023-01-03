@@ -230,7 +230,7 @@ Resources:
     Type: 'AWS::ApiGatewayV2::Stage'
     Properties:
       ApiId: !Ref APIGWHTTPEndpoint
-      StageName: dev
+      StageName: $default
       AutoDeploy: true
     DependsOn:
       - APIGWHTTPEndpoint
